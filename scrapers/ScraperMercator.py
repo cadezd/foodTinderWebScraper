@@ -1,8 +1,10 @@
-from bs4 import BeautifulSoup
-from time import sleep
-from random import randint
 import json
+import sys
+from random import randint
+from time import sleep
+
 import requests
+from bs4 import BeautifulSoup
 
 
 class ScraperMercator():
@@ -106,14 +108,16 @@ class ScraperMercator():
     def save(self, data: dict):  # shrani podatke na reddis preko POST requesta
         for k, v in data.items():
             r = requests.post(url=self.api_endpoint, data=v)
-            print(r.text)
+            with open('output.log', 'a') as sys.stdout:
+                print(r.text)
 
     def work(self):
         response = self.fetch_data()  # pridobi podatke
         while response is not None:
-            print("OFFSET: ", self.fetch_offset)
-            print("URL: ", self.url)
-            print()
+            with open('output.log', 'a') as sys.stdout:
+                print("OFFSET: ", self.fetch_offset)
+                print("URL: ", self.url)
+                print()
             for data in response:
                 exctracted_data = self.extract_data(data)  # izlušči potrebne podatke
                 if exctracted_data is not None:
