@@ -110,14 +110,17 @@ class ScraperMercator():
             r = requests.post(url=self.api_endpoint, data=v)
             with open('output.log', 'a') as sys.stdout:
                 print(r.text)
+                sys.stdout.flush()
 
     def work(self):
         response = self.fetch_data()  # pridobi podatke
         while response is not None:
             with open('output.log', 'a') as sys.stdout:
+                print()
                 print("OFFSET: ", self.fetch_offset)
                 print("URL: ", self.url)
                 print()
+                sys.stdout.flush()
             for data in response:
                 exctracted_data = self.extract_data(data)  # izlušči potrebne podatke
                 if exctracted_data is not None:
