@@ -15,7 +15,7 @@ class ScraperMercator():
             f"https://trgovina.mercator.si/market/products/browseProducts/getProducts?limit={self.fetch_limit}&offset={self.fetch_offset}&filterData%5Bcategories%5D=14535405%2C14535446%2C14535463%2C14535481%2C14535505%2C14535512%2C14535548%2C14535588%2C14535612%2C14535637%2C14535661%2C14535681%2C14535711%2C14535736%2C14535749%2C14535803%2C14535810%2C16873196&filterData%5Boffset%5D=2&from={self.fetch_offset * self.fetch_limit}&_=1656771045265"
         self.waiting_time = waiting_time
 
-        self.api_endpoint = "http://localhost:8082/product/add"
+        self.api_endpoint = "http://localhost:8080/product/add"
 
     def fetch_data(self):
         response = requests.get(self.url)
@@ -108,14 +108,14 @@ class ScraperMercator():
     def save(self, data: dict):  # shrani podatke na reddis preko POST requesta
         for k, v in data.items():
             r = requests.post(url=self.api_endpoint, data=v)
-            with open('output.log', 'a') as sys.stdout:
+            with open('output.log', 'w') as sys.stdout:
                 print(r.text)
                 sys.stdout.flush()
 
     def work(self):
         response = self.fetch_data()  # pridobi podatke
         while response is not None:
-            with open('output.log', 'a') as sys.stdout:
+            with open('output.log', 'w') as sys.stdout:
                 print()
                 print("OFFSET: ", self.fetch_offset)
                 print("URL: ", self.url)
