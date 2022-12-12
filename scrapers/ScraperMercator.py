@@ -108,14 +108,14 @@ class ScraperMercator():
     def save(self, data: dict):  # shrani podatke na reddis preko POST requesta
         for k, v in data.items():
             r = requests.post(url=self.api_endpoint, data=v)
-            with open('output.log', 'w') as sys.stdout:
+            with open('output.log', 'a') as sys.stdout:
                 print(r.text)
                 sys.stdout.flush()
 
     def work(self):
         response = self.fetch_data()  # pridobi podatke
         while response is not None:
-            with open('output.log', 'w') as sys.stdout:
+            with open('output.log', 'a') as sys.stdout:
                 print()
                 print("OFFSET: ", self.fetch_offset)
                 print("URL: ", self.url)
