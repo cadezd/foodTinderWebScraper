@@ -1,3 +1,4 @@
+import os
 from scrapers.ScraperMercator import ScraperMercator
 
 def main():
@@ -15,7 +16,12 @@ def main():
     All output is redirected to output.log
     """)
 
-    scd = ScraperMercator(100, 0, 3);
+    scd = ScraperMercator(os.getenv("HOST", default="spring"),
+                          os.getenv("PORT", default="8082"),
+                          os.getenv("PATH", default="/product/add"),
+                          100,
+                          0,
+                          3)
     scd.work()
 
 
